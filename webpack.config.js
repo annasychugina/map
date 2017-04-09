@@ -5,6 +5,8 @@ var loaders = require('./webpack.loaders');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var DashboardPlugin = require('webpack-dashboard/plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
+var CleanWebpackPlugin = require('clean-webpack-plugin');
+
 
 const HOST = process.env.HOST || "127.0.0.1";
 const PORT = process.env.PORT || "8888";
@@ -46,6 +48,11 @@ module.exports = {
 		host: HOST
 	},
 	plugins: [
+		new CleanWebpackPlugin(['public']),
+		new webpack.ProvidePlugin({
+			React: 'react',
+			ReactDOM: 'react-dom',
+		}),
 		new webpack.NoEmitOnErrorsPlugin(),
 		new webpack.HotModuleReplacementPlugin(),
 		new ExtractTextPlugin({
@@ -55,10 +62,7 @@ module.exports = {
 		new DashboardPlugin(),
 		new HtmlWebpackPlugin({
 			template: './src/template.html',
-			files: {
-				css: ['style.css'],
-				js: [ "bundle.js"],
-			}
+			filename: './index.html'
 		}),
 	]
 };
