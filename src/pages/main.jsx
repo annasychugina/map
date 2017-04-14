@@ -1,4 +1,5 @@
 import Map from '../components/Map/index';
+import Menu from '../components/Menu';
 // import Review from '../components/Review/index';
 import { autobind } from 'core-decorators';
 import { connect } from 'react-redux';
@@ -19,6 +20,7 @@ export default class IndexPage extends React.Component {
 	render() {
 		return (
 			<div>
+				<Menu />
 				<Map baloons={this.props.baloons} />
 				{/*<Review />*/}
 			</div>

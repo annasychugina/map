@@ -54,10 +54,10 @@ export default class Map extends React.Component {
 
 	render() {
 		return (
-			<div>
+			<div class="container">
 				<div class="map" id={this.props.container} onClick={this.onMapClick} ></div>
 				{ this.state.isShowModal ?  <Review /> : '' }
-				</div>
+			</div>
 		)
 	}
 }
