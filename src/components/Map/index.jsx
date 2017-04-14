@@ -1,10 +1,9 @@
-import {autobind} from 'core-decorators';
+import Review from '../Review/index';
 
-@autobind()
+
 export default class Map extends React.Component {
 	constructor(props) {
 		super(props);
-
 		new Promise(resolve => ymaps.ready(resolve))
 			.then(() => {
 				this.map = new ymaps.Map(this.props.container, {
@@ -28,11 +27,11 @@ export default class Map extends React.Component {
 				});
 			});
 	}
-	render() {
-		return (
-				<div class="map" id={this.props.container}></div>
-		)
-	}
+
+	state = {
+		isShowModal: false
+	};
+
 	static defaultProps = {
 		zoom: 12,
 		centerX: 55.751574,
@@ -47,6 +46,19 @@ export default class Map extends React.Component {
 		container: React.PropTypes.string.isRequired
 	}
 
+	onMapClick = () => {
+		this.setState({
+			isShowModal: !this.state.isShowModal
+		})
+	}
 
-
+	render() {
+		return (
+			<div>
+				<div class="map" id={this.props.container} onClick={this.onMapClick} ></div>
+				{ this.state.isShowModal ?  <Review /> : '' }
+				</div>
+		)
+	}
 }
+
