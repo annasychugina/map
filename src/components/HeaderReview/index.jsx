@@ -6,16 +6,13 @@ export default class HeaderReview extends React.PureComponent {
 		super(props);
 	}
 
-	onBtnClose() {
-		console.log("hello");
-	}
-
 	render() {
+
 		return (
 			<div class="review__header">
 				<span class="review__icon"/>
 				<span class="review__tittle">{this.props.title}</span>
-				<button class="review__close" onClick={ this.onBtnClose }/>
+				<button class="review__close" />
 			</div>
 		);
 	}

@@ -20,7 +20,7 @@ export default class IndexPage extends React.PureComponent {
 		return (
 			<div>
 				<Menu />
-				<Map baloons={this.props.baloons} />
+				<Map />
 				{/*<Review />*/}
 			</div>
 		)

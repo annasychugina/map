@@ -2,18 +2,18 @@ import Comments from '../Comments';
 import FormReview from '../FormReview';
 import HeaderReview from '../HeaderReview';
 import { autobind } from 'core-decorators';
-import Map from '../Map/index'
+import React, { Component, PropTypes } from 'react';
 
 @autobind
-export default class Review extends React.PureComponent {
+export default class Review extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			position: [],
-			baloon: undefined
+			title: ''
 		}
 
-		ymaps.geocode(this.props.coords, {})
+		window.ymaps.geocode(this.props.coords, {})
 			.then(res => {
 				let title = res.geoObjects.get(0).properties.get('text');
 				let posY = this.props.e.get('domEvent').get('pageY');
@@ -23,18 +23,21 @@ export default class Review extends React.PureComponent {
 					title: title
 				};
 
+				console.log(title);
+
 				this.setState({
-					position: [posX, posY], baloon
+					position: [posX, posY],
+					title: title
 				})
 			})
 	}
 
-
 	render() {
+		console.log(this.state.title);
 		return (
+
 			<div class="review">
-				<HeaderReview />
-				{/*<Comments comments={this.baloon.comments}/>*/}
+				<HeaderReview title={this.state.title}/>
 				<FormReview />
 			</div>
 		)

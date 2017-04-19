@@ -1,23 +1,21 @@
 import Review from '../Review/index';
 let mapCarouselTemplate = require('./template.html');
 import { autobind } from 'core-decorators';
-// import { YMaps, Map, Placemark } from 'react-yandex-maps';
-//
-// const mapState = { center: [55.76, 37.64], zoom: 10 };
+
 
 @autobind
 export default class Map extends React.PureComponent {
 	constructor(props) {
 		super(props);
-		new Promise(resolve => ymaps.ready(resolve))
+		new Promise(resolve => window.ymaps.ready(resolve))
 			.then(() => {
-				this.context.map = new ymaps.Map(this.props.container, {
+				this.map = new ymaps.Map(this.props.container, {
 					center: [this.props.centerX, this.props.centerY],
 					zoom: [this.props.zoom]
 				});
 
-				this.context.customItemContentLayout = ymaps.templateLayoutFactory.createClass(mapCarouselTemplate);
-				this.context.clusterer = new ymaps.Clusterer({
+				this.customItemContentLayout = ymaps.templateLayoutFactory.createClass(mapCarouselTemplate);
+				this.clusterer = new ymaps.Clusterer({
 					preset: 'islands#invertedVioletClusterIcons',
 					clusterBalloonContentLayout: 'cluster#balloonCarousel',
 					groupByCoordinates: false,
@@ -33,18 +31,18 @@ export default class Map extends React.PureComponent {
 
 
 
-				this.context.map.events.add('click', (e) => {
+				this.map.events.add('click', (e) => {
 					let coords = e.get('coords');
 					this.onMapClick(e, coords);
 				});
 
 
 
-				for (let baloon of this.props.baloons) {
-					let placemark = this.addPlacemark(baloon);
-					this.context.map.geoObjects.add(placemark);
-					this.context.clusterer.add(placemark);
-				}
+				// for (let baloon of this.props.baloons) {
+				// 	let placemark = this.addPlacemark(baloon);
+				// 	this.context.map.geoObjects.add(placemark);
+				// 	this.context.clusterer.add(placemark);
+				// }
 
 			});
 
@@ -103,4 +101,3 @@ export default class Map extends React.PureComponent {
 		)
 	}
 }
-
