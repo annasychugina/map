@@ -1,23 +1,28 @@
 import Review from '../Review/index';
+let mapCarouselTemplate = require('./template.html');
+import { autobind } from 'core-decorators';
+// import { YMaps, Map, Placemark } from 'react-yandex-maps';
+//
+// const mapState = { center: [55.76, 37.64], zoom: 10 };
 
-
-export default class Map extends React.Component {
+@autobind
+export default class Map extends React.PureComponent {
 	constructor(props) {
 		super(props);
 		new Promise(resolve => ymaps.ready(resolve))
 			.then(() => {
-				this.map = new ymaps.Map(this.props.container, {
+				this.context.map = new ymaps.Map(this.props.container, {
 					center: [this.props.centerX, this.props.centerY],
 					zoom: [this.props.zoom]
 				});
 
-				this.customItemContentLayout = ymaps.templateLayoutFactory.createClass(mapCarouselTemplate);
-				this.clusterer = new ymaps.Clusterer({
+				this.context.customItemContentLayout = ymaps.templateLayoutFactory.createClass(mapCarouselTemplate);
+				this.context.clusterer = new ymaps.Clusterer({
 					preset: 'islands#invertedVioletClusterIcons',
 					clusterBalloonContentLayout: 'cluster#balloonCarousel',
 					groupByCoordinates: false,
 					clusterHideIconOnBalloonOpen: false,
-					clusterBalloonItemContentLayout: customItemContentLayout,
+					clusterBalloonItemContentLayout: this.customItemContentLayout,
 					geoObjectHideIconOnBalloonOpen: false,
 					clusterBalloonPanelMaxMapArea: 0,
 					clusterDisableClickZoom: true,
@@ -25,10 +30,32 @@ export default class Map extends React.Component {
 					clusterOpenBalloonOnClick: true,
 					gridSize: 50
 				});
+
+
+
+				this.context.map.events.add('click', (e) => {
+					let coords = e.get('coords');
+					this.onMapClick(e, coords);
+				});
+
+
+
+				for (let baloon of this.props.baloons) {
+					let placemark = this.addPlacemark(baloon);
+					this.context.map.geoObjects.add(placemark);
+					this.context.clusterer.add(placemark);
+				}
+
 			});
+
+		// this.context.submit = () => {
+		//
+		// }
 	}
 
 	state = {
+		e: undefined,
+		coords: undefined,
 		isShowModal: false
 	};
 
@@ -44,19 +71,34 @@ export default class Map extends React.Component {
 		centerX: React.PropTypes.number.isRequired,
 		centerY: React.PropTypes.number.isRequired,
 		container: React.PropTypes.string.isRequired
-	}
+	};
 
-	onMapClick = () => {
+	onMapClick = (e, coords) => {
 		this.setState({
+			e, coords,
 			isShowModal: !this.state.isShowModal
 		})
+	};
+
+	addPlacemark(baloon) {
+		let place = new ymaps.Placemark(baloon.coords, {
+			author: baloon.author,
+			coords: baloon.coords,
+			place: baloon.place,
+			comment: baloon.comment,
+			date: baloon.date,
+			address: baloon.address
+		});
+
+		return place;
 	}
 
 	render() {
 		return (
 			<div class="container">
-				<div class="map" id={this.props.container} onClick={this.onMapClick} ></div>
-				{ this.state.isShowModal ?  <Review /> : '' }
+				<div class="map" id={this.props.container}></div>
+				{ this.state.isShowModal ?  <Review coords={this.state.coords} e={this.state.e}/> : '' }
+
 			</div>
 		)
 	}

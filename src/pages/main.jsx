@@ -1,6 +1,5 @@
 import Map from '../components/Map/index';
 import Menu from '../components/Menu';
-// import Review from '../components/Review/index';
 import { autobind } from 'core-decorators';
 import { connect } from 'react-redux';
 import * as Actions from '../actions/baloons';
@@ -11,7 +10,7 @@ import * as Actions from '../actions/baloons';
 		baloons: store.baloons.baloons
 	}
 })
-export default class IndexPage extends React.Component {
+export default class IndexPage extends React.PureComponent {
 	constructor(props) {
 		super(props);
 		let p = Actions.init();

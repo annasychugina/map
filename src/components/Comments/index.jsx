@@ -1,7 +1,7 @@
 import React from 'react';
 import Comment from '../Comment';
 
-export default class Comments extends React.Component {
+export default class Comments extends React.PureComponent {
 	render() {
 		const {
 			comments

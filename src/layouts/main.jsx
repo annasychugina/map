@@ -1,5 +1,5 @@
 
-export default class MainLayout extends React.Component {
+export default class MainLayout extends React.PureComponent {
 	constructor(props) {
 		super(props);
 	}

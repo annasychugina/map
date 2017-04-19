@@ -1,6 +1,10 @@
-import React from 'react';
+import {autobind} from 'core-decorators';
 
-export default class HeaderReview extends React.Component {
+@autobind
+export default class HeaderReview extends React.PureComponent {
+	constructor(props) {
+		super(props);
+	}
 
 	onBtnClose() {
 		console.log("hello");
@@ -10,7 +14,7 @@ export default class HeaderReview extends React.Component {
 		return (
 			<div class="review__header">
 				<span class="review__icon"/>
-				<span class="review__tittle" id="location"/>
+				<span class="review__tittle">{this.props.title}</span>
 				<button class="review__close" onClick={ this.onBtnClose }/>
 			</div>
 		);
