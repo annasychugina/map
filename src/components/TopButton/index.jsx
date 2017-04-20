@@ -1,13 +1,14 @@
 import React from 'react';
 import FlatButton from 'material-ui/FlatButton';
 
-class TopButton extends React.PureComponent {
+export  default class TopButton extends React.PureComponent {
 	_getStyles() {
 		return {
-				hoverColor: '#EF5350',
-				color: '#EF5350',
-				fontSize: '12px',
-				paddingRight: '0'
+			hoverColor: '#efb8a8',
+			contentFontFamily: 'Roboto, sans-serif',
+			color: '#EF5350',
+			fontSize: '12px',
+			paddingRight: '0'
 		};
 	}
 
@@ -35,8 +36,6 @@ TopButton.propTypes = {
 };
 
 TopButton.defaultProps = {
-	label: 'Pause',
+	label: 'Exit',
 	style: {},
 };
-
-export default TopButton;

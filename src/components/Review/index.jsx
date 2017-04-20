@@ -33,11 +33,14 @@ export default class Review extends React.Component {
 	}
 
 	render() {
-		console.log(this.state.title);
+		console.log(this.state.position);
+
 		return (
+
 
 			<div class="review">
 				<HeaderReview title={this.state.title}/>
+				{/*<Comments comments={data}/>*/}
 				<FormReview />
 			</div>
 		)
