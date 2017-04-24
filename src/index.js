@@ -5,6 +5,8 @@ import IndexPage from './pages/main';
 import MainLayout from './layouts/main';
 import '../styles/main.scss';
 
+// store.dispatch(initMap)
+
 ReactDOM.render(
 	<Provider store={store}>
 		<Router history={browserHistory}>

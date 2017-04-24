@@ -36,12 +36,10 @@ export default class Review extends React.Component {
 		console.log(this.state.position);
 
 		return (
-
-
 			<div class="review">
 				<HeaderReview title={this.state.title}/>
 				{/*<Comments comments={data}/>*/}
-				<FormReview />
+				<FormReview coords={this.props.coords} map={this.props.map}/>
 			</div>
 		)
 	}

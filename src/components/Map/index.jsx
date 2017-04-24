@@ -95,7 +95,7 @@ export default class Map extends React.PureComponent {
 		return (
 			<div class="container">
 				<div class="map" id={this.props.container}></div>
-				{ this.state.isShowModal ?  <Review coords={this.state.coords} e={this.state.e}/> : '' }
+				{ this.state.isShowModal ?  <Review map={this.map} coords={this.state.coords} e={this.state.e}/> : '' }
 
 			</div>
 		)

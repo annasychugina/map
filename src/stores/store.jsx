@@ -4,11 +4,16 @@ import promise from 'redux-promise-middleware'; //middleware, позволяет
 
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { baloonsReducer } from '../reducers/baloons';
+import comments from '../reducers/comments';
 
 const middleWare = applyMiddleware(promise(), thunk, logger());
 const reducer = combineReducers({
-	baloons: baloonsReducer
+	baloons: baloonsReducer,
+	comments,
 });
-const store = createStore(reducer, middleWare);
+
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__;
+
+const store = createStore(reducer, composeEnhancers(middleWare));
 
 export default store;
