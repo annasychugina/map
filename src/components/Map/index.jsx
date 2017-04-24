@@ -4,9 +4,9 @@ import { autobind } from 'core-decorators';
 
 
 @autobind
-export default class Map extends React.PureComponent {
-	constructor(props) {
-		super(props);
+export default class Map extends React.Component {
+	constructor(props, context) {
+		super(props, context);
 		new Promise(resolve => window.ymaps.ready(resolve))
 			.then(() => {
 				this.map = new ymaps.Map(this.props.container, {
@@ -54,7 +54,8 @@ export default class Map extends React.PureComponent {
 	state = {
 		e: undefined,
 		coords: undefined,
-		isShowModal: false
+		isShowModal: false,
+		comments: [],
 	};
 
 	static defaultProps = {
@@ -72,8 +73,17 @@ export default class Map extends React.PureComponent {
 	};
 
 	onMapClick = (e, coords) => {
+		let baloon = this.props.baloons.find(baloon => {
+			return baloon.coords.join(",") === coords.join(",");
+
+		});
+
+		if (!baloon) {
+			return;
+		}
+
 		this.setState({
-			e, coords,
+			e, coords, comments: baloon.comments,
 			isShowModal: !this.state.isShowModal
 		})
 	};
@@ -91,11 +101,15 @@ export default class Map extends React.PureComponent {
 		return place;
 	}
 
+	getChildContext() {
+		return this.context.comments;
+	}
+
 	render() {
 		return (
 			<div class="container">
 				<div class="map" id={this.props.container}></div>
-				{ this.state.isShowModal ?  <Review coords={this.state.coords} e={this.state.e}/> : '' }
+				{ this.state.isShowModal ?  <Review comments={this.state.comments} coords={this.state.coords} e={this.state.e}/> : '' }
 
 			</div>
 		)

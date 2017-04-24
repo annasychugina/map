@@ -3,8 +3,10 @@ import Map from '../components/Map/index';
 import Menu from '../components/Menu';
 import { autobind } from 'core-decorators';
 import { connect } from 'react-redux';
-import * as Actions from '../actions/baloons';
+import * as  baloonActions from '../actions/baloons';
+import * as  commentsActions from '../actions/comments';
 import Sidebar from 'react-sidebar';
+import PropTypes from 'prop-types';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 
 injectTapEventPlugin();
@@ -20,7 +22,8 @@ const mql = window.matchMedia(`(min-width: 800px)`);
 export default class IndexPage extends React.PureComponent {
 	constructor(props) {
 		super(props);
-		let p = Actions.init();
+
+		let p = baloonActions.init();
 		this.props.dispatch(p);
 
 		this.state = {
@@ -28,8 +31,6 @@ export default class IndexPage extends React.PureComponent {
 			sidebarDocked: false,
 		};
 
-		this.mediaQueryChanged = this.mediaQueryChanged.bind(this);
-		this.onSetSidebarOpen = this.onSetSidebarOpen.bind(this);
 	}
 
 	onSetSidebarOpen = (open) => {
@@ -84,10 +85,29 @@ export default class IndexPage extends React.PureComponent {
 
 	toggleMenu() {
 		if (this.state.mql.matches) {
-			this.setState({sidebarDocked: !this.state.sidebarDocked});
-			this.setState({sidebarOpen: false});
+			this.setState({sidebarDocked: !this.state.sidebarDocked, sidebarOpen: false});
 		} else {
 			this.setState({sidebarOpen: true});
+		}
+	}
+
+	addComment(comment) {
+		commentsActions.add(comment)
+	}
+
+
+	addBaloon(baloon) {
+		baloonActions.add(baloon)
+	}
+
+	getChildContext() {
+		return {
+			baloons: {
+				add: this.addBaloon,
+			},
+			comments: {
+				add: this.addComment,
+			}
 		}
 	}
 
@@ -98,7 +118,7 @@ export default class IndexPage extends React.PureComponent {
 		return (
 			<div id='app-container' style={styles.root} >
 				<Menu
-					toggleMenu={this.toggleMenu.bind(this)}
+					toggleMenu={this.toggleMenu}
 				/>
 				<div style={styles.sidebarContainer}>
 
@@ -116,7 +136,8 @@ export default class IndexPage extends React.PureComponent {
 				         }
 				>
 				</Sidebar>
-					<Map />
+
+					<Map baloons = {this.props.baloons}  />
 				</div>
 			</div>
 		)

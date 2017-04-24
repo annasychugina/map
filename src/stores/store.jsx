@@ -1,14 +1,25 @@
-import thunk from 'redux-thunk'; //middleware, позволяет нам, возвращать не новое состояние, а функцию, которая принимает dispatcher
-import logger from 'redux-logger'; //middleware, позволяет логировать action и его payload
-import promise from 'redux-promise-middleware'; //middleware, позволяет возвращать промисы
-
-import { createStore, combineReducers, applyMiddleware } from 'redux';
+import { createStore, applyMiddleware, compose, combineReducers } from 'redux'
+import thunk from 'redux-thunk';
+import logger from 'redux-logger';
+import reducer from '../reducers';
+import promise from 'redux-promise-middleware';
 import { baloonsReducer } from '../reducers/baloons';
 
-const middleWare = applyMiddleware(promise(), thunk, logger());
-const reducer = combineReducers({
-	baloons: baloonsReducer
-});
-const store = createStore(reducer, middleWare);
+import randomId from '../middlewares/index';
+
+const dumbMiddleware = store => next => action => next({...action, addition: 'hello world'});
+
+// const middleWare = applyMiddleware(promise(), thunk, logger());
+const enhancer = compose(
+	applyMiddleware(dumbMiddleware, randomId, logger),
+	window.devToolsExtension ? window.devToolsExtension() : f => f
+);
+
+// const reducer = combineReducers({
+// 	baloons: baloonsReducer
+// });
+const store = createStore(reducer, {}, enhancer);
+window.store = store;
+
 
 export default store;
