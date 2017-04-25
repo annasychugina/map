@@ -1,13 +1,9 @@
-import {autobind} from 'core-decorators';
-
-@autobind
 export default class HeaderReview extends React.PureComponent {
 	constructor(props) {
 		super(props);
 	}
 
 	render() {
-
 		return (
 			<div class="review__header">
 				<span class="review__icon"/>

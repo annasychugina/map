@@ -1,10 +1,9 @@
 import Comments from '../Comments';
 import FormReview from '../FormReview';
 import HeaderReview from '../HeaderReview';
-import { autobind } from 'core-decorators';
 import React, { Component, PropTypes } from 'react';
 
-@autobind
+
 export default class Review extends React.Component {
 	constructor(props) {
 		super(props);
@@ -12,6 +11,8 @@ export default class Review extends React.Component {
 			position: [],
 			title: ''
 		}
+
+
 
 		window.ymaps.geocode(this.props.coords, {})
 			.then(res => {
@@ -23,7 +24,7 @@ export default class Review extends React.Component {
 					title: title
 				};
 
-				console.log(title);
+
 
 				this.setState({
 					position: [posX, posY],
@@ -33,13 +34,12 @@ export default class Review extends React.Component {
 	}
 
 	render() {
-		console.log(this.state.position);
-
+		console.log('clReview',this.props.clusterer);
 		return (
 			<div class="review">
 				<HeaderReview title={this.state.title}/>
 				{/*<Comments comments={data}/>*/}
-				<FormReview coords={this.props.coords} map={this.props.map}/>
+				<FormReview coords={this.props.coords} map={this.props.map} clusterer={this.props.clusterer}/>
 			</div>
 		)
 	}

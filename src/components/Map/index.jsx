@@ -1,9 +1,6 @@
 import Review from '../Review/index';
 let mapCarouselTemplate = require('./template.html');
-import { autobind } from 'core-decorators';
 
-
-@autobind
 export default class Map extends React.PureComponent {
 	constructor(props) {
 		super(props);
@@ -29,12 +26,12 @@ export default class Map extends React.PureComponent {
 					gridSize: 50
 				});
 
-
-
 				this.map.events.add('click', (e) => {
 					let coords = e.get('coords');
 					this.onMapClick(e, coords);
 				});
+
+				this.map.geoObjects.add(this.clusterer);
 
 
 
@@ -46,9 +43,6 @@ export default class Map extends React.PureComponent {
 
 			});
 
-		// this.context.submit = () => {
-		//
-		// }
 	}
 
 	state = {
@@ -78,25 +72,12 @@ export default class Map extends React.PureComponent {
 		})
 	};
 
-	addPlacemark(baloon) {
-		let place = new ymaps.Placemark(baloon.coords, {
-			author: baloon.author,
-			coords: baloon.coords,
-			place: baloon.place,
-			comment: baloon.comment,
-			date: baloon.date,
-			address: baloon.address
-		});
-
-		return place;
-	}
 
 	render() {
 		return (
 			<div class="container">
 				<div class="map" id={this.props.container}></div>
-				{ this.state.isShowModal ?  <Review map={this.map} coords={this.state.coords} e={this.state.e}/> : '' }
-
+				{ this.state.isShowModal ?  <Review map={this.map} clusterer={this.clusterer} coords={this.state.coords} e={this.state.e}/> : '' }
 			</div>
 		)
 	}

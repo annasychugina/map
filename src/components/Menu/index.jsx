@@ -1,5 +1,5 @@
 import React from 'react';
-import Radium from 'radium';
+
 import { Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle } from 'material-ui/Toolbar';
 import baseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
@@ -7,7 +7,7 @@ import Title from '../TopHeader';
 import TopButton from '../TopButton';
 
 
-@Radium
+
 export default class Menu extends React.Component {
 
 	getChildContext() {
@@ -57,10 +57,7 @@ export default class Menu extends React.Component {
 			<Toolbar style={styles.root}>
 				<Title />
 				<ToolbarGroup style={styles.toolbarGroup.root}>
-
-
 					<TopButton style={styles.toolbarGroup.flatButton} />
-					{/*<TopButton label={'Menu'}  style={styles.toolbarGroup.flatButton} />*/}
 					<TopButton label={'Menu'} onTouchTap={this.props.toggleMenu} style={styles.toolbarGroup.flatButton} />
 				</ToolbarGroup>
 			</Toolbar>
@@ -71,7 +68,6 @@ export default class Menu extends React.Component {
 
 Menu.contextTypes = {
 	muiTheme: React.PropTypes.object,
-	// title: React.PropTypes.string.isRequired,
 };
 
 Menu.propTypes = {

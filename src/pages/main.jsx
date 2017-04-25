@@ -1,7 +1,6 @@
 import React from 'react';
 import Map from '../components/Map/index';
 import Menu from '../components/Menu';
-import { autobind } from 'core-decorators';
 import { connect } from 'react-redux';
 import * as Actions from '../actions/baloons';
 import Sidebar from 'react-sidebar';
@@ -11,7 +10,7 @@ injectTapEventPlugin();
 
 const mql = window.matchMedia(`(min-width: 800px)`);
 
-@autobind()
+
 @connect(store => {
 	return {
 		baloons: store.baloons.baloons
@@ -28,8 +27,7 @@ export default class IndexPage extends React.PureComponent {
 			sidebarDocked: false,
 		};
 
-		this.mediaQueryChanged = this.mediaQueryChanged.bind(this);
-		this.onSetSidebarOpen = this.onSetSidebarOpen.bind(this);
+
 	}
 
 	onSetSidebarOpen = (open) => {
@@ -84,8 +82,7 @@ export default class IndexPage extends React.PureComponent {
 
 	toggleMenu() {
 		if (this.state.mql.matches) {
-			this.setState({sidebarDocked: !this.state.sidebarDocked});
-			this.setState({sidebarOpen: false});
+			this.setState({sidebarDocked: !this.state.sidebarDocked, sidebarOpen: false});
 		} else {
 			this.setState({sidebarOpen: true});
 		}
