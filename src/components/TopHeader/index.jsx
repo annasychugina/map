@@ -13,7 +13,6 @@ class Title extends React.PureComponent {
 				fontSize: '24px',
 				paddingRight: '0',
 
-
 				':hover': {
 					color: '#EF5350',
 				},

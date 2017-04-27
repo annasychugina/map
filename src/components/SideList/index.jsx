@@ -4,7 +4,6 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import {List, ListItem} from 'material-ui/List';
 import Subheader from 'material-ui/Subheader';
 import SideItem from '../SideItem';
-import CommunicationChatBubble from 'material-ui/svg-icons/communication/chat-bubble';
 
 
 
@@ -15,15 +14,13 @@ export  default class SideList extends React.PureComponent {
 
 	_getStyles() {
 		return {
-
-			root: {
-				position: 'absolute',
-				top: '0',
-				width: '290px',
-				overflow: 'hidden',
-				height: '50%',
-				paddingBottom: 0,
-				right: '0',
+			subheaderStyle: {
+				color: '#000000',
+				backgroundColor: '#efb8a8',
+				display: 'block',
+				textAlign: 'center',
+				lineHeight: '24px',
+				paddingLeft: '0',
 			},
 
 			listContainer: {
@@ -34,26 +31,6 @@ export  default class SideList extends React.PureComponent {
 				overflowY: 'scroll',
 				height: 'calc(100% - 25px)',
 			},
-			transition: {
-				enter: {
-					default: {
-						opacity: '0.01',
-						transition: 'opacity .3s ease-in',
-					},
-					active: {
-						opacity: '1',
-					},
-				},
-				leave: {
-					default: {
-						opacity: '1',
-						transition: 'opacity .3s ease-in',
-					},
-					active: {
-						opacity: '0.01',
-					},
-				},
-			},
 		};
 	}
 
@@ -61,15 +38,15 @@ export  default class SideList extends React.PureComponent {
 		const styles = this._getStyles.call(this);
 
 		return (
-			<div>
+			<div style={styles.listContainer}>
 
-			<List>
-				<Subheader>Comments</Subheader>
+			<List >
+				<Subheader style={styles.subheaderStyle}>All Comments</Subheader>
 				<SideItem/>
 			</List>
 
 				<List>
-					<Subheader>Liked</Subheader>
+					<Subheader style={styles.subheaderStyle}>Liked Comments</Subheader>
 					<SideItem/>
 					<SideItem/>
 					<SideItem/>

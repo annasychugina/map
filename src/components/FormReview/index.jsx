@@ -29,6 +29,8 @@ class FormReview extends React.PureComponent {
 			comment: data.review,
 			date:  new Date().toLocaleString('ru', options),
 			// address: 'asdasdas',
+		}, {
+			preset: 'islands#redIcon'
 		});
 		this.props.map.geoObjects.add(a);
 		console.log(a);

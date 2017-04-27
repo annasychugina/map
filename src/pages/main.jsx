@@ -6,7 +6,6 @@ import * as Actions from '../actions/baloons';
 import SideList from '../components/SideList';
 import Sidebar from 'react-sidebar';
 import injectTapEventPlugin from 'react-tap-event-plugin';
-import Subheader from 'material-ui/Subheader';
 
 injectTapEventPlugin();
 
