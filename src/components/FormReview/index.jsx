@@ -51,9 +51,9 @@ class FormReview extends React.PureComponent {
 				<p class="form__tittle">
 					Ваш отзыв
 				</p>
-				<input class="form__input" placeholder="Ваше Имя" onChange={(evt) => this.setState({name: evt.target.value})} />
-				<input class="form__input" placeholder="Укажите место" onChange={(evt) => this.setState({place: evt.target.value})} />
-				<textarea class="form__review" placeholder="Поделитесь впечатлениями" onChange={(evt) => this.setState({review: evt.target.value})} />
+				<input class="form__input" placeholder="Your name" onChange={(evt) => this.setState({name: evt.target.value})} />
+				<input class="form__input" placeholder="Place" onChange={(evt) => this.setState({place: evt.target.value})} />
+				<textarea class="form__review" placeholder="Feedback" onChange={(evt) => this.setState({review: evt.target.value})} />
 				<button class="review__add" type="submit" onClick={() => this.save(this.state)}>Добавить</button>
 			</div>
 		);
