@@ -9,7 +9,7 @@ var CleanWebpackPlugin = require('clean-webpack-plugin');
 
 
 const HOST = process.env.HOST || "127.0.0.1";
-const PORT = process.env.PORT || "8880";
+const PORT = process.env.PORT || "8888";
 
 loaders.push({
 	test: /\.scss$/,

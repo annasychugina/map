@@ -1,1 +1,2 @@
-export const ADD_COMMENT = 'ADD_COMMENT'
+export const REVIEW_SAVED = 'REVIEW_SAVED';
+export const SET_YEAR = 'SET_YEAR'

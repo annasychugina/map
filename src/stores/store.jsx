@@ -1,25 +1,19 @@
-import { createStore, applyMiddleware, compose, combineReducers } from 'redux'
-import thunk from 'redux-thunk';
-import logger from 'redux-logger';
-import reducer from '../reducers';
-import promise from 'redux-promise-middleware';
+import thunk from 'redux-thunk'; //middleware, позволяет нам, возвращать не новое состояние, а функцию, которая принимает dispatcher
+import logger from 'redux-logger'; //middleware, позволяет логировать action и его payload
+import promise from 'redux-promise-middleware'; //middleware, позволяет возвращать промисы
+
+import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { baloonsReducer } from '../reducers/baloons';
+import comments from '../reducers/comments';
 
-import randomId from '../middlewares/index';
+const middleWare = applyMiddleware(promise(), thunk, logger());
+const reducer = combineReducers({
+	baloons: baloonsReducer,
+	comments,
+});
 
-const dumbMiddleware = store => next => action => next({...action, addition: 'hello world'});
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__;
 
-// const middleWare = applyMiddleware(promise(), thunk, logger());
-const enhancer = compose(
-	applyMiddleware(dumbMiddleware, randomId, logger),
-	window.devToolsExtension ? window.devToolsExtension() : f => f
-);
-
-// const reducer = combineReducers({
-// 	baloons: baloonsReducer
-// });
-const store = createStore(reducer, {}, enhancer);
-window.store = store;
-
+const store = createStore(reducer, composeEnhancers(middleWare));
 
 export default store;

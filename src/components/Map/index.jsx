@@ -1,12 +1,18 @@
 import Review from '../Review/index';
 let mapCarouselTemplate = require('./template.html');
-import { autobind } from 'core-decorators';
 
+/* в пропсах приходит
+	{
+	'54.4544454.212321': [{title: 'alo'}, {title: 'alo2'}],
+	'51.4544451.212321': [{title: '22'}, {title: '22'}]
+}
 
-@autobind
-export default class Map extends React.Component {
-	constructor(props, context) {
-		super(props, context);
+данные нарисовать на карте
+*/
+
+export default class Map extends React.PureComponent {
+	constructor(props) {
+		super(props);
 		new Promise(resolve => window.ymaps.ready(resolve))
 			.then(() => {
 				this.map = new ymaps.Map(this.props.container, {
@@ -29,33 +35,67 @@ export default class Map extends React.Component {
 					gridSize: 50
 				});
 
-
-
 				this.map.events.add('click', (e) => {
 					let coords = e.get('coords');
+
 					this.onMapClick(e, coords);
 				});
 
+				this.clusterer.events.add('click', (e) => {
+					let object = e.get('target');
 
+					if (object.options.getName() === 'geoObject') {
+						const coords = object.geometry.getCoordinates();
+						const posY = e.get('domEvent').get('pageY');
+						const posX = e.get('domEvent').get('pageX');
 
-				// for (let baloon of this.props.baloons) {
-				// 	let placemark = this.addPlacemark(baloon);
-				// 	this.context.map.geoObjects.add(placemark);
-				// 	this.context.clusterer.add(placemark);
-				// }
+						this.setState({
+							coords,
+							isShowModal: true,
+							title: Math.random(),
+						})
+					}
+				});
 
+				this.map.geoObjects.add(this.clusterer);
+
+				const options = {
+					day: 'numeric',
+					month: 'numeric',
+					year: 'numeric',
+					timezone: 'UTC',
+					hour: 'numeric',
+					minute: 'numeric',
+					second: 'numeric'
+				};
+
+if (this.props.baloons) {
+
+	for (let baloon of this.props.baloons) {
+		for (let comment of baloon.comments) {
+			const a = new ymaps.Placemark(comment.coords, {
+				author: comment.name,
+				place: comment.place,
+				comment: comment.review,
+				date:  new Date().toLocaleString('ru', options),
+				// address: 'asdasdas',
+			}, {
+				preset: 'islands#redIcon'
 			});
 
-		// this.context.submit = () => {
-		//
-		// }
+			this.map.geoObjects.add(a);
+			this.clusterer.add(a);
+		}
+
+	}
+
+}});
 	}
 
 	state = {
 		e: undefined,
 		coords: undefined,
-		isShowModal: false,
-		comments: [],
+		isShowModal: false
 	};
 
 	static defaultProps = {
@@ -73,44 +113,27 @@ export default class Map extends React.Component {
 	};
 
 	onMapClick = (e, coords) => {
-		let baloon = this.props.baloons.find(baloon => {
-			return baloon.coords.join(",") === coords.join(",");
-
-		});
-
-		if (!baloon) {
-			return;
-		}
-
 		this.setState({
-			e, coords, comments: baloon.comments,
+			e, coords,
+			title: Math.random(),
 			isShowModal: !this.state.isShowModal
 		})
 	};
 
-	addPlacemark(baloon) {
-		let place = new ymaps.Placemark(baloon.coords, {
-			author: baloon.author,
-			coords: baloon.coords,
-			place: baloon.place,
-			comment: baloon.comment,
-			date: baloon.date,
-			address: baloon.address
-		});
-
-		return place;
-	}
-
-	getChildContext() {
-		return this.context.comments;
-	}
 
 	render() {
 		return (
 			<div class="container">
 				<div class="map" id={this.props.container}></div>
-				{ this.state.isShowModal ?  <Review comments={this.state.comments} coords={this.state.coords} e={this.state.e}/> : '' }
-
+				{ this.state.isShowModal ?
+					<Review
+						map={this.map}
+						clusterer={this.clusterer}
+						coords={this.state.coords}
+						e={this.state.e}
+						title={this.state.title}
+						closeModal={() => this.setState({isShowModal: false})}
+					/> : '' }
 			</div>
 		)
 	}

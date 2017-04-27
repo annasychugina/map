@@ -34,7 +34,19 @@
       border: 1px solid #9f9f9f;
     }
   }
+
+  &__likes {
+      display: flex;
+      align-items: center;
+      margin: 0 0 10px;
+  }
+
+
 }
+
+
+
+
 
 ::-webkit-input-placeholder {
   color: #ccc;

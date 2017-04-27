@@ -1,19 +1,17 @@
 import React from 'react';
 import Map from '../components/Map/index';
 import Menu from '../components/Menu';
-import { autobind } from 'core-decorators';
 import { connect } from 'react-redux';
-import * as  baloonActions from '../actions/baloons';
-import * as  commentsActions from '../actions/comments';
+import * as Actions from '../actions/baloons';
+import SideList from '../components/SideList';
 import Sidebar from 'react-sidebar';
-import PropTypes from 'prop-types';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 
 injectTapEventPlugin();
 
 const mql = window.matchMedia(`(min-width: 800px)`);
 
-@autobind()
+
 @connect(store => {
 	return {
 		baloons: store.baloons.baloons
@@ -23,7 +21,7 @@ export default class IndexPage extends React.PureComponent {
 	constructor(props) {
 		super(props);
 
-		let p = baloonActions.init();
+		let p = Actions.init();
 		this.props.dispatch(p);
 
 		this.state = {
@@ -60,8 +58,10 @@ export default class IndexPage extends React.PureComponent {
 				bottom: 0,
 				overflow: 'hidden',
 			},
+
 			sidebar: {
 				width: '400px',
+				backgroundColor: 'white',
 			},
 			content: {
 				position: 'absolute',
@@ -91,26 +91,6 @@ export default class IndexPage extends React.PureComponent {
 		}
 	}
 
-	addComment(comment) {
-		commentsActions.add(comment)
-	}
-
-
-	addBaloon(baloon) {
-		baloonActions.add(baloon)
-	}
-
-	getChildContext() {
-		return {
-			baloons: {
-				add: this.addBaloon,
-			},
-			comments: {
-				add: this.addComment,
-			}
-		}
-	}
-
 
 	render() {
 		const styles = this._getStyles();
@@ -118,7 +98,7 @@ export default class IndexPage extends React.PureComponent {
 		return (
 			<div id='app-container' style={styles.root} >
 				<Menu
-					toggleMenu={this.toggleMenu}
+					toggleMenu={this.toggleMenu.bind(this)}
 				/>
 				<div style={styles.sidebarContainer}>
 
@@ -129,15 +109,13 @@ export default class IndexPage extends React.PureComponent {
 				         pullRight={true}
 				         sidebar={
 					         <div style={styles.sidebar}>
-						         <p>
-							         sideBarContent
-						         </p>
+						         <SideList/>
+
 					         </div>
 				         }
 				>
 				</Sidebar>
-
-					<Map baloons = {this.props.baloons}  />
+					<Map baloons={this.props.baloons}/>
 				</div>
 			</div>
 		)

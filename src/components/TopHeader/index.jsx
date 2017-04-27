@@ -3,7 +3,7 @@
 import React from 'react';
 import { ToolbarTitle } from 'material-ui/Toolbar';
 
-// @Radium
+
 class Title extends React.PureComponent {
 	_getStyle() {
 
@@ -12,7 +12,6 @@ class Title extends React.PureComponent {
 				color: '#EF5350',
 				fontSize: '24px',
 				paddingRight: '0',
-
 
 				':hover': {
 					color: '#EF5350',
