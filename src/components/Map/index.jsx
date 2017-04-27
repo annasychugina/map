@@ -1,6 +1,15 @@
 import Review from '../Review/index';
 let mapCarouselTemplate = require('./template.html');
 
+/* в пропсах приходит
+	{
+	'54.4544454.212321': [{title: 'alo'}, {title: 'alo2'}],
+	'51.4544451.212321': [{title: '22'}, {title: '22'}]
+}
+
+надо вот эти данные нарисовать на карте
+*/
+
 export default class Map extends React.PureComponent {
 	constructor(props) {
 		super(props);
@@ -28,7 +37,24 @@ export default class Map extends React.PureComponent {
 
 				this.map.events.add('click', (e) => {
 					let coords = e.get('coords');
+
 					this.onMapClick(e, coords);
+				});
+
+				this.clusterer.events.add('click', (e) => {
+					let object = e.get('target');
+
+					if (object.options.getName() === 'geoObject') {
+						const coords = object.geometry.getCoordinates();
+						const posY = e.get('domEvent').get('pageY');
+						const posX = e.get('domEvent').get('pageX');
+
+						this.setState({
+							coords,
+							isShowModal: true,
+							title: Math.random(),
+						})
+					}
 				});
 
 				this.map.geoObjects.add(this.clusterer);
@@ -68,6 +94,7 @@ export default class Map extends React.PureComponent {
 	onMapClick = (e, coords) => {
 		this.setState({
 			e, coords,
+			title: Math.random(),
 			isShowModal: !this.state.isShowModal
 		})
 	};
@@ -77,7 +104,15 @@ export default class Map extends React.PureComponent {
 		return (
 			<div class="container">
 				<div class="map" id={this.props.container}></div>
-				{ this.state.isShowModal ?  <Review map={this.map} clusterer={this.clusterer} coords={this.state.coords} e={this.state.e}/> : '' }
+				{ this.state.isShowModal ?
+					<Review
+						map={this.map}
+						clusterer={this.clusterer}
+						coords={this.state.coords}
+						e={this.state.e}
+						title={this.state.title}
+						closeModal={() => this.setState({isShowModal: false})}
+					/> : '' }
 			</div>
 		)
 	}

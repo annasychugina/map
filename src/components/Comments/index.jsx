@@ -4,7 +4,7 @@ import Comment from '../Comment';
 export default class Comments extends React.PureComponent {
 	render() {
 		const {
-			comments
+			comments = []
 		} = this.props;
 
 		return (

@@ -1,10 +1,10 @@
+import React, { Component, PropTypes } from 'react';
+import { connect } from 'react-redux';
 import Comments from '../Comments';
 import FormReview from '../FormReview';
 import HeaderReview from '../HeaderReview';
-import React, { Component, PropTypes } from 'react';
 
-
-export default class Review extends React.Component {
+class Review extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -30,12 +30,18 @@ export default class Review extends React.Component {
 	}
 
 	render() {
+		const { data } = this.props;
+
 		return (
 			<div class="review" >
-				<HeaderReview title={this.state.title}/>
-				{/*<Comments comments={data}/>*/}
+				<HeaderReview title={this.props.title} closeModal={this.props.closeModal}/>
+				<Comments comments={this.props.data[this.props.coords.join('')]}/>
 				<FormReview coords={this.props.coords} map={this.props.map} clusterer={this.props.clusterer}/>
 			</div>
 		)
 	}
 }
+
+export default connect(
+	(state) => ({data: state.comments})
+)(Review);

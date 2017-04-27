@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
-import * as REVIEW_SAVED  from '../../constants/comments';
+import { REVIEW_SAVED }  from '../../constants/comments';
+import { saveReview } from '../../actions/baloons';
 
 class FormReview extends React.PureComponent {
 	constructor(props) {
@@ -39,13 +40,10 @@ class FormReview extends React.PureComponent {
 		this.props.saveReview({
 			...data,
 			coords: this.props.coords,
-		});
+		}, this.props.comments);
 	};
 
 	render() {
-		const { saveReview } = this.props;
-
-
 		return (
 			<div class="form">
 				<p class="form__tittle">
@@ -61,11 +59,8 @@ class FormReview extends React.PureComponent {
 }
 
 export default connect(
-	null,
+	(state) => ({comments: state.comments}),
 	(dispatch) => ({
-		saveReview: (data) => dispatch({
-			type: REVIEW_SAVED,
-			data
-		})
+		saveReview: (data, comments) => dispatch(saveReview(data, comments))
 	})
 )(FormReview)

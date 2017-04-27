@@ -1,7 +1,13 @@
-export default (state = [], action) => {
+export default (state = {}, action) => {
   switch (action.type) {
     case 'REVIEW_SAVED':
-        return [...state, action.data];
+      const { coords, ...rest } = action.data;
+      const currentValues = state[coords.join('')] || [];
+
+      return {
+        ...state,
+        [coords.join('')]: [...currentValues, action.data]
+      };
       break;
     default:
       return state;
