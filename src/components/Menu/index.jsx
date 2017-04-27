@@ -1,10 +1,11 @@
 import React from 'react';
 
-import { Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle } from 'material-ui/Toolbar';
+import { Toolbar, ToolbarGroup } from 'material-ui/Toolbar';
 import baseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import Title from '../TopHeader';
 import TopButton from '../TopButton';
+
 
 
 
@@ -42,11 +43,6 @@ export default class Menu extends React.Component {
 				flatButton: {
 					bottom: '1px',
 				},
-
-				separator: {
-					float: 'none',
-					marginLeft: 'auto',
-				},
 			},
 		};
 	}
@@ -64,7 +60,6 @@ export default class Menu extends React.Component {
 		);
 	}
 }
-
 
 Menu.contextTypes = {
 	muiTheme: React.PropTypes.object,

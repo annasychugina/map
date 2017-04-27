@@ -3,7 +3,7 @@
 import React from 'react';
 import { ToolbarTitle } from 'material-ui/Toolbar';
 
-// @Radium
+
 class Title extends React.PureComponent {
 	_getStyle() {
 

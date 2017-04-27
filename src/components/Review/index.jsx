@@ -12,8 +12,6 @@ export default class Review extends React.Component {
 			title: ''
 		}
 
-
-
 		window.ymaps.geocode(this.props.coords, {})
 			.then(res => {
 				let title = res.geoObjects.get(0).properties.get('text');
@@ -24,8 +22,6 @@ export default class Review extends React.Component {
 					title: title
 				};
 
-
-
 				this.setState({
 					position: [posX, posY],
 					title: title
@@ -34,9 +30,8 @@ export default class Review extends React.Component {
 	}
 
 	render() {
-		console.log('clReview',this.props.clusterer);
 		return (
-			<div class="review">
+			<div class="review" >
 				<HeaderReview title={this.state.title}/>
 				{/*<Comments comments={data}/>*/}
 				<FormReview coords={this.props.coords} map={this.props.map} clusterer={this.props.clusterer}/>

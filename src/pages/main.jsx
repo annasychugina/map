@@ -3,8 +3,10 @@ import Map from '../components/Map/index';
 import Menu from '../components/Menu';
 import { connect } from 'react-redux';
 import * as Actions from '../actions/baloons';
+import SideList from '../components/SideList';
 import Sidebar from 'react-sidebar';
 import injectTapEventPlugin from 'react-tap-event-plugin';
+import Subheader from 'material-ui/Subheader';
 
 injectTapEventPlugin();
 
@@ -26,8 +28,6 @@ export default class IndexPage extends React.PureComponent {
 			sidebarOpen: false,
 			sidebarDocked: false,
 		};
-
-
 	}
 
 	onSetSidebarOpen = (open) => {
@@ -57,8 +57,10 @@ export default class IndexPage extends React.PureComponent {
 				bottom: 0,
 				overflow: 'hidden',
 			},
+
 			sidebar: {
 				width: '400px',
+				backgroundColor: 'white',
 			},
 			content: {
 				position: 'absolute',
@@ -106,9 +108,8 @@ export default class IndexPage extends React.PureComponent {
 				         pullRight={true}
 				         sidebar={
 					         <div style={styles.sidebar}>
-						         <p>
-							         sideBarContent
-						         </p>
+						         <SideList/>
+
 					         </div>
 				         }
 				>
