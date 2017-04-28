@@ -10,7 +10,6 @@ class FormReview extends React.PureComponent {
 	}
 
 	save = (data) => {
-
 		const options = {
 			day: 'numeric',
 			month: 'numeric',
@@ -20,8 +19,6 @@ class FormReview extends React.PureComponent {
 			minute: 'numeric',
 			second: 'numeric'
 		};
-
-		console.log('clFORM',this.props.clusterer);
 
 		const a = new ymaps.Placemark(this.props.coords, {
 			author: data.name,
@@ -34,7 +31,6 @@ class FormReview extends React.PureComponent {
 			preset: 'islands#redIcon'
 		});
 		this.props.map.geoObjects.add(a);
-		console.log(a);
 
 		this.props.clusterer.add(a);
 		this.props.saveReview({
@@ -47,7 +43,7 @@ class FormReview extends React.PureComponent {
 		return (
 			<div class="form">
 				<p class="form__tittle">
-					Ваш отзыв
+					Feedback
 				</p>
 				<input class="form__input" placeholder="Your name" onChange={(evt) => this.setState({name: evt.target.value})} />
 				<input class="form__input" placeholder="Place" onChange={(evt) => this.setState({place: evt.target.value})} />

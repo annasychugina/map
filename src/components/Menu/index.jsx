@@ -6,9 +6,6 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import Title from '../TopHeader';
 import TopButton from '../TopButton';
 
-
-
-
 export default class Menu extends React.Component {
 
 	getChildContext() {

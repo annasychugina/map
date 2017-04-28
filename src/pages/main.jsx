@@ -20,13 +20,15 @@ const mql = window.matchMedia(`(min-width: 800px)`);
 export default class IndexPage extends React.PureComponent {
 	constructor(props) {
 		super(props);
-		// let p = Actions.init();
-		// this.props.dispatch(p);
+
+		let p = Actions.init();
+		this.props.dispatch(p);
 
 		this.state = {
 			sidebarOpen: false,
 			sidebarDocked: false,
 		};
+
 	}
 
 	onSetSidebarOpen = (open) => {
@@ -113,7 +115,7 @@ export default class IndexPage extends React.PureComponent {
 				         }
 				>
 				</Sidebar>
-					<Map />
+					<Map baloons={this.props.baloons}/>
 				</div>
 			</div>
 		)

@@ -16,30 +16,14 @@ export function baloonsReducer(state = {baloons: []}, action) {
 }
 
 function init() {
-	let baloons = [];
-	if (localStorage.length) {
-		let keys = Object.getOwnPropertyNames(localStorage);
-
-		for (let key in keys) {
-
-			if ( keys.hasOwnProperty(key) ) {
-				let coord = keys[key];
-				let baloon = localStorage.getItem(coord);
-
-				if (baloon) {
-					try {
-						baloon = JSON.parse(baloon);
-					} catch (err) {
-						continue;
-					}
-
-					if (!baloon.title) {
-						continue;
-					}
-					baloons.push(baloon);
-				}
-			}
-		}
+	debugger;
+	let total = localStorage.getItem('total');
+	if (total) {
+		total = JSON.parse(total);
+	} else {
+		total = []
 	}
-	return baloons;
+
+
+	return total;
 }

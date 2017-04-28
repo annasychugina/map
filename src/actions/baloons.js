@@ -3,13 +3,36 @@ import { REVIEW_SAVED }  from '../constants/comments';
 
 export const saveReview = (data, comments) => {
 	let c = data.coords.join(',');
-	const currentValues = comments[data.coords.join('')] || [];
+	let total = localStorage.getItem('total');
 
-	localStorage.setItem('total', JSON.stringify({...comments, [data.coords.join('')]: [...currentValues, data]}));
+	if (total) {
+		total = JSON.parse(total);
+	} else {
+		total = [];
+	}
+
+	let baloon = total.find(b => b.id === c);
+	if (!baloon) {
+		baloon = {
+			id: c,
+			comments: [{
+				...data
+			}]
+		};
+
+		total.push(baloon);
+	} else {
+		baloon.comments.push({
+			...data
+		})
+	}
+
+
+	localStorage.setItem('total', JSON.stringify(total));
 
 	return {
 		type: REVIEW_SAVED,
-		data,
+		baloon,
 	}
 }
 
@@ -25,18 +48,9 @@ export function add(coords, comments, title) {
 }
 
 export function init() {
-	let c = coords.join(',');
-	let data = localStorage.getItem('total');
 
-	if (!data) {
-
-		return {
-			type: "EMPTY"
-		};
-	}
 
 	return {
-		type: REVIEW_SAVED,
-		data
+		type: BaloonsContants.INIT
 	};
 }

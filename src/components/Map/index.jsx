@@ -2,13 +2,13 @@ import Review from '../Review/index';
 let mapCarouselTemplate = require('./template.html');
 
 /* в пропсах приходит
-	{
-	'54.4544454.212321': [{title: 'alo'}, {title: 'alo2'}],
-	'51.4544451.212321': [{title: '22'}, {title: '22'}]
-}
+ {
+ '54.4544454.212321': [{title: 'alo'}, {title: 'alo2'}],
+ '51.4544451.212321': [{title: '22'}, {title: '22'}]
+ }
 
-надо вот эти данные нарисовать на карте
-*/
+ данные нарисовать на карте
+ */
 
 export default class Map extends React.PureComponent {
 	constructor(props) {
@@ -49,26 +49,52 @@ export default class Map extends React.PureComponent {
 						const posY = e.get('domEvent').get('pageY');
 						const posX = e.get('domEvent').get('pageX');
 
-						this.setState({
-							coords,
-							isShowModal: true,
-							title: Math.random(),
-						})
+						ymaps.geocode(coords, {})
+							.then(res => {
+								let title = res.geoObjects.get(0).properties.get('text');
+
+								this.setState({
+									coords,
+									isShowModal: true,
+									title: title,
+								})
+
+							})
 					}
 				});
 
 				this.map.geoObjects.add(this.clusterer);
 
+				const options = {
+					day: 'numeric',
+					month: 'numeric',
+					year: 'numeric',
+					timezone: 'UTC',
+					hour: 'numeric',
+					minute: 'numeric',
+					second: 'numeric'
+				};
 
+				if (this.props.baloons) {
 
-				// for (let baloon of this.props.baloons) {
-				// 	let placemark = this.addPlacemark(baloon);
-				// 	this.context.map.geoObjects.add(placemark);
-				// 	this.context.clusterer.add(placemark);
-				// }
+					for (let baloon of this.props.baloons) {
+						for (let comment of baloon.comments) {
+							const a = new ymaps.Placemark(comment.coords, {
+								author: comment.name,
+								place: comment.place,
+								comment: comment.review,
+								date: new Date().toLocaleString('ru', options),
+								// address: 'asdasdas',
+							}, {
+								preset: 'islands#redIcon'
+							});
 
-			});
-
+							this.map.geoObjects.add(a);
+							this.clusterer.add(a);
+						}
+					}
+				}
+		});
 	}
 
 	state = {
@@ -91,14 +117,19 @@ export default class Map extends React.PureComponent {
 		container: React.PropTypes.string.isRequired
 	};
 
-	onMapClick = (e, coords) => {
-		this.setState({
-			e, coords,
-			title: Math.random(),
-			isShowModal: !this.state.isShowModal
-		})
-	};
 
+	onMapClick = (e, coords) => {
+		ymaps.geocode(coords, {})
+			.then(res => {
+				let title = res.geoObjects.get(0).properties.get('text');
+
+				this.setState({
+					e, coords,
+					title: title,
+					isShowModal: !this.state.isShowModal
+				})
+			})
+	};
 
 	render() {
 		return (

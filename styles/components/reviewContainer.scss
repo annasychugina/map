@@ -87,4 +87,29 @@
     display: inline-block;
     color: #ccc;
   }
+
+  &__checkbox {
+    display: none;
+  }
+
+  &__label {
+    font: 16px "Roboto-Regular", sans-serif;
+    user-select: none;
+    cursor: pointer;
+  }
+
+  &__checkbox + .review__label::before {
+    content: "";
+    display: inline-block;
+    vertical-align: middle;
+    min-width: 22px;
+    min-height: 22px;
+    margin: 0 10px 0 0;
+    background: url("../images/unlike.svg") center/22px 22px no-repeat;
+    cursor: pointer;
+  }
+
+  &__checkbox:checked + .review__label::before {
+    background: url("../images/like.svg") center/22px 22px no-repeat;
+  }
 }

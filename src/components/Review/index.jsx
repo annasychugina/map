@@ -10,7 +10,7 @@ class Review extends React.Component {
 		this.state = {
 			position: [],
 			title: ''
-		}
+		};
 
 		window.ymaps.geocode(this.props.coords, {})
 			.then(res => {
@@ -31,6 +31,7 @@ class Review extends React.Component {
 
 	render() {
 		const { data } = this.props;
+
 
 		return (
 			<div class="review" >

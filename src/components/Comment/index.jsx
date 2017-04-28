@@ -20,6 +20,10 @@ export default class Comment extends React.PureComponent {
 				<div class="review__text">
 					{data.comment}
 				</div>
+				<div class="review__like">
+					<input type="checkbox" class="review__checkbox" id="" />
+					<label class="review__label" for=""></label>
+				</div>
 			</li>
 		);
 	}
