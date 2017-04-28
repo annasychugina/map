@@ -102,14 +102,14 @@
     content: "";
     display: inline-block;
     vertical-align: middle;
-    min-width: 22px;
-    min-height: 22px;
+    min-width: 10px;
+    min-height: 10px;
     margin: 0 10px 0 0;
-    background: url("../images/unlike.svg") center/22px 22px no-repeat;
+    background: url("../images/unlike.svg") center/10px 10px no-repeat;
     cursor: pointer;
   }
 
   &__checkbox:checked + .review__label::before {
-    background: url("../images/like.svg") center/22px 22px no-repeat;
+    background: url("../images/like.svg") center/10px 10px no-repeat;
   }
 }

@@ -6,6 +6,7 @@ export default (state = {}, action) => {
 
       return {
         ...state,
+
         [id]: [...currentValues, data]
       };
       break;

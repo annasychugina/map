@@ -5,6 +5,9 @@ export default class Comment extends React.PureComponent {
 		const {
 			data
 		} = this.props;
+		console.log('data', data);
+
+		//
 
 		return (
 			<li class="review__item">

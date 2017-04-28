@@ -37,7 +37,7 @@ export const saveReview = (data, comments) => {
 			data,
 		},
 	}
-}
+};
 
 export function add(coords, comments, title) {
 	let baloon = {

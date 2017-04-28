@@ -2,7 +2,6 @@ import React from 'react';
 import baseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import {List, ListItem} from 'material-ui/List';
-import CommunicationChatBubble from 'material-ui/svg-icons/communication/chat-bubble';
 
 
 class SideItem extends React.PureComponent {
@@ -50,6 +49,7 @@ class SideItem extends React.PureComponent {
 					primaryText={
 						<div  style={styles.primaryText}>
 							<div class="review__author">
+
 
 							</div>
 

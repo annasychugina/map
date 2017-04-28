@@ -22,7 +22,5 @@ function init() {
 	} else {
 		total = []
 	}
-
-
 	return total;
 }

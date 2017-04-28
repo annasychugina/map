@@ -32,7 +32,7 @@ class Review extends React.Component {
 	render() {
 		const { data } = this.props;
 
-		console.log(this.props);
+		console.log('ggg',(this.props.comments || {}).comments);
 		return (
 			<div class="review" >
 				<HeaderReview title={this.props.title} closeModal={this.props.closeModal}/>

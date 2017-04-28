@@ -1,15 +1,6 @@
 import Review from '../Review/index';
 let mapCarouselTemplate = require('./template.html');
 
-/* в пропсах приходит
- {
- '54.4544454.212321': [{title: 'alo'}, {title: 'alo2'}],
- '51.4544451.212321': [{title: '22'}, {title: '22'}]
- }
-
- данные нарисовать на карте
- */
-
 export default class Map extends React.PureComponent {
 	constructor(props) {
 		super(props);
@@ -131,11 +122,6 @@ export default class Map extends React.PureComponent {
 			})
 	};
 
-	componentDidMount() {
-		const element = ReactDOM.findDOMNode(this.refs.title);
-		console.log(element);
-		alert(element);
-	}
 
 	render() {
 		return (
