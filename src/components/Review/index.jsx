@@ -32,11 +32,11 @@ class Review extends React.Component {
 	render() {
 		const { data } = this.props;
 
-
+		console.log(this.props);
 		return (
 			<div class="review" >
 				<HeaderReview title={this.props.title} closeModal={this.props.closeModal}/>
-				<Comments comments={this.props.data[this.props.coords.join('')]}/>
+				<Comments comments={(this.props.comments || {}).comments}/>
 				<FormReview coords={this.props.coords} map={this.props.map} clusterer={this.props.clusterer}/>
 			</div>
 		)
@@ -44,5 +44,10 @@ class Review extends React.Component {
 }
 
 export default connect(
-	(state) => ({data: state.comments})
+	(state) => ({data: state.baloons.baloons}),
+	null,
+	(stateProps, _, parentProps) => ({
+		...parentProps,
+		comments: stateProps.data && stateProps.data.find(e => e.id == parentProps.coords.join(','))
+	})
 )(Review);

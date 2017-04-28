@@ -32,7 +32,10 @@ export const saveReview = (data, comments) => {
 
 	return {
 		type: REVIEW_SAVED,
-		baloon,
+		baloon: {
+			id: c,
+			data,
+		},
 	}
 }
 

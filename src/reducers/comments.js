@@ -1,12 +1,12 @@
 export default (state = {}, action) => {
   switch (action.type) {
     case 'REVIEW_SAVED':
-      const { coords, ...rest } = action.data;
-      const currentValues = state[coords.join('')] || [];
+      const { id, ...data } = action.baloon;
+      const currentValues = state[id] || [];
 
       return {
         ...state,
-        [coords.join('')]: [...currentValues, action.data]
+        [id]: [...currentValues, data]
       };
       break;
     default:

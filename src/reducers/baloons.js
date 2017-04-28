@@ -16,7 +16,6 @@ export function baloonsReducer(state = {baloons: []}, action) {
 }
 
 function init() {
-	debugger;
 	let total = localStorage.getItem('total');
 	if (total) {
 		total = JSON.parse(total);
