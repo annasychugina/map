@@ -131,6 +131,12 @@ export default class Map extends React.PureComponent {
 			})
 	};
 
+	componentDidMount() {
+		const element = ReactDOM.findDOMNode(this.refs.title);
+		console.log(element);
+		alert(element);
+	}
+
 	render() {
 		return (
 			<div class="container">

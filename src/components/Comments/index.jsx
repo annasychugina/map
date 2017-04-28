@@ -6,7 +6,6 @@ export default class Comments extends React.PureComponent {
 		const {
 			comments = []
 		} = this.props;
-		console.log(this.props);
 
 		return (
 			<ul class="review__list">
